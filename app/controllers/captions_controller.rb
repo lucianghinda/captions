@@ -16,8 +16,8 @@ class CaptionsController < ApplicationController
   def create
     caption = {
       id: 1,
-      url: "http://example.com/image.png",
-      text: "caption text",
+      url: params[:caption][:url],
+      text: params[:caption][:text],
       caption_url: "http://localhost:3000/image.png"
     }
     render json: { caption: caption }, status: :created

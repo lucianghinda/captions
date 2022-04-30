@@ -28,11 +28,16 @@ RSpec.describe "Captions", type: :request do
   end
 
   describe "POST /captions" do
-    let(:url) { "http://example.com/image.png" }
+    let(:url) { "http://example.com/image1.png" }
     let(:text) { "caption text" }
 
     it "responds with 201" do
-      post captions_path
+      post captions_path, params: {
+        caption: {
+          url: url,
+          text: text
+        }
+      }
       expect(response).to have_http_status(:created)
     end
 
