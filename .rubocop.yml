@@ -5,7 +5,7 @@ require:
 AllCops:
   Exclude:
     - 'vendor/bundle'
-    - 'bin'
+    - 'bin/*'
 
 Style/StringLiterals:
   Enabled: false
