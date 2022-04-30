@@ -14,16 +14,37 @@ RSpec.describe "Captions", type: :request do
       get captions_path
 
       json_response = JSON.parse(response.body, symbolize_names: true)
-      expect(json_response).to eq({
-                                    captions: [
-                                      {
-                                        id: 1,
-                                        url: "https://example.com/image.png",
-                                        text: "Caption on image",
-                                        caption_url: "https://localhost:3000/image.png"
-                                      }
-                                    ]
-                                  })
+      expect(json_response).to eq({ captions: [] })
+    end
+  end
+
+  describe "POST /captions" do
+    let(:url) { "http://example.com/image1.png" }
+    let(:text) { "caption text" }
+
+    it "responds with 201" do
+      post captions_path, params: {
+        caption: {
+          url: url,
+          text: text
+        }
+      }
+      expect(response).to have_http_status(:created)
+    end
+
+    it "responds with correct body" do
+      post captions_path, params: {
+        caption: {
+          url: url,
+          text: text
+        }
+      }
+      json_response = JSON.parse(response.body, symbolize_names: true)
+      expect(json_response[:caption]).to match(hash_including({
+                                                                url: url,
+                                                                text: text,
+                                                                caption_url: nil
+                                                              }))
     end
   end
 end
